@@ -9,12 +9,12 @@ public class MoviesController : Controller
     // GET
     public IActionResult Random()
     {
-        var movie = new Movie() { Id = 1, Name = "Random Movie" };
+        var movie = new Movie() { Name = "Random Movie" };
         var customersList = new List<Customer>
         {
-            new Customer(1,"Arnold"),
-            new Customer(2,"beneš"),
-            new Customer(3,"Arasdsanold"),
+            new Customer { Name = "Arnold", IsSubscribedToNewsletter = true },
+            new Customer { Name = "Černý", IsSubscribedToNewsletter = false },
+            new Customer { Name = "Negr", IsSubscribedToNewsletter = true }
         };
 
         var viewModel = new randomMovieViewModel

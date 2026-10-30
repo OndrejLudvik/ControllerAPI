@@ -22,13 +22,44 @@ namespace WebApplication1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsSubscribedToNewsletter")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<byte>("MembershipTypeId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MembershipTypeId");
+
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.MembershipType", b =>
+                {
+                    b.Property<byte>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<byte>("DiscountRate")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<byte>("DurationInMonths")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<short>("SignUpfee")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MembershipType");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Movie", b =>
@@ -44,6 +75,22 @@ namespace WebApplication1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.Customer", b =>
+                {
+                    b.HasOne("WebApplication1.Models.MembershipType", "MembershipType")
+                        .WithMany("Customer")
+                        .HasForeignKey("MembershipTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MembershipType");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.MembershipType", b =>
+                {
+                    b.Navigation("Customer");
                 });
 #pragma warning restore 612, 618
         }
