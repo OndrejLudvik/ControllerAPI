@@ -1,0 +1,27 @@
+﻿@model WebApplication1.ViewModels.randomMovieViewModel
+
+@{
+    ViewBag.Title = "Random Movie";
+    Layout = "_Layout";
+}
+
+@{
+    var className = Model.CustomerList.Count > 5 ? "popular" : null;
+}
+
+<h2 class="@className">@Model.Movie.Name</h2>
+
+@if (Model.CustomerList.Count == 0)
+{
+    <text>No one rented this </text>
+}
+else
+{
+    <ul>
+        @foreach (var customer in Model.CustomerList)
+        {
+            <li>@customer.Name</li>
+        }
+    </ul>
+}
+
