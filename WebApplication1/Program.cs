@@ -4,6 +4,9 @@ using WebApplication1.Models;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TheatreDb>(opt => opt.UseSqlite("Data Source=TheatreDb.db"));
 builder.Services.AddControllersWithViews();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -11,6 +14,11 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
+}
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 using (var scope = app.Services.CreateScope())
 {
